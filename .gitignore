@@ -1,0 +1,6 @@
+.envrc
+
+
+/lib/
+/.shards/
+*.dwarf

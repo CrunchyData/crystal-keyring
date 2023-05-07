@@ -1,0 +1,14 @@
+name: keyring
+version: 0.1.0
+
+authors:
+  - Adam Brightwell <adam.brightwell@crunchydata.com>
+
+description: |
+    Keyring implementation for Crystal.
+
+development_dependencies:
+  spectator:
+    gitlab: arctic-fox/spectator
+
+license: MIT
