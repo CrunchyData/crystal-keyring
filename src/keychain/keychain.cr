@@ -32,6 +32,8 @@ module Keychain
     when Security::OSStatus::ErrSecDuplicateItem
       raise ItemDuplicate.new
     end
+
+    return false
   end
 
   # Get the value of a security item from the keychain.
