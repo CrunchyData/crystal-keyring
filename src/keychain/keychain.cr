@@ -8,7 +8,7 @@ module Keychain
   end
 
   # Add a security item to the keychain.
-  def set(service : String, account : String, password : String, label : String? = nil)
+  def set(service : String, account : String, password : String, label : String? = nil) : Bool
     service = CoreFoundation.string_create_with_c_string(nil, service, CoreFoundation::StringEncoding::UTF8)
     account = CoreFoundation.string_create_with_c_string(nil, account, CoreFoundation::StringEncoding::UTF8)
     password = CoreFoundation.string_create_with_c_string(nil, password, CoreFoundation::StringEncoding::UTF8)
@@ -28,7 +28,7 @@ module Keychain
 
     case status
     when Security::OSStatus::ErrSecSuccess
-      return nil
+      return true
     when Security::OSStatus::ErrSecDuplicateItem
       raise ItemDuplicate.new
     end
@@ -74,12 +74,12 @@ module Keychain
 
     case status
     when Security::OSStatus::ErrSecSuccess
+      return true
     when Security::OSStatus::ErrSecItemNotFound
+      raise ItemNotFound.new
     else
       raise Exception.new("Unhandled: #{status}")
     end
-
-    true
   end
 
   # Update a security item in the keychain.

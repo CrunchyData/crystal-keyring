@@ -7,7 +7,7 @@ module Keyring
   class NotAvailable < Exception
   end
 
-  def set(service : String, account : String, password : String, label : String? = nil)
+  def set(service : String, account : String, password : String, label : String? = nil) : Bool
     {% if flag?(:darwin) %}
       Keychain.set(label: label, service: service, account: account, password: password)
     {% else %}
