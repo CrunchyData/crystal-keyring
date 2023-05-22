@@ -4,10 +4,14 @@ require "./libsecret/*"
 module Keyring
   extend self
 
+  class NotAvailable < Exception
+  end
+
   def set(service : String, account : String, password : String, label : String? = nil)
     {% if flag?(:darwin) %}
       Keychain.set(label: label, service: service, account: account, password: password)
     {% else %}
+      raise NotAvailable.new
     {% end %}
   end
 
@@ -15,6 +19,7 @@ module Keyring
     {% if flag?(:darwin) %}
       Keychain.get(service: service, account: account)
     {% else %}
+      raise NotAvailable.new
     {% end %}
   end
 
@@ -22,6 +27,7 @@ module Keyring
     {% if flag?(:darwin) %}
       Keychain.delete(service: service, account: account)
     {% else %}
+      raise NotAvailable.new
     {% end %}
   end
 end
